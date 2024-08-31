@@ -1,0 +1,11 @@
+body {
+  /* remove margins and scroll bars */
+  margin: 0;
+  overflow: hidden;
+}
+canvas {
+  /* tell our canvas to take up the full page */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

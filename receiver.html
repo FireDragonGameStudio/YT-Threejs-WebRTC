@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebRTC Receiver</title>
+    <style>
+      body {
+        /* remove margins and scroll bars */
+        margin: 0;
+        overflow: hidden;
+        background-color: #000;
+      }
+      video {
+        /* tell our video container to take up the full page */
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="remoteVideo" autoplay playsinline></video>
+    <script type="module" src="/receiver.js"></script>
+  </body>
+</html>
