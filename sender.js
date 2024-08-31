@@ -30,7 +30,7 @@ socket.onmessage = async (message) => {
     try {
       await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
     } catch (e) {
-      console.error("Fehler beim Hinzufügen des ICE-Kandidaten:", e);
+      console.error("Error adding ICE-Candidate:", e);
     }
   }
 };
