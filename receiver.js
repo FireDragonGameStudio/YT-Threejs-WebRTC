@@ -1,5 +1,6 @@
 // WebSocket connection
-const socket = new WebSocket("ws://localhost:8080");
+//const socket = new WebSocket("wss://localhost:8080/");
+const socket = new WebSocket("wss://unity-stun-signaling.glitch.me/");
 
 // WebRTC PeerConnection
 const peerConnection = new RTCPeerConnection({
@@ -16,9 +17,9 @@ peerConnection.onicecandidate = (event) => {
 // Remote-Stream receiving
 peerConnection.ontrack = (event) => {
   const remoteVideo = document.getElementById("remoteVideo");
-  if (remoteVideo.srcObject !== event.streams[0]) {
-    remoteVideo.srcObject = event.streams[0];
-  }
+  // if (remoteVideo.srcObject !== event.streams[0]) {
+  remoteVideo.srcObject = event.streams[0];
+  // }
 };
 
 // WebSocket-Message handling
@@ -32,12 +33,10 @@ socket.onmessage = async (message) => {
       const answer = await peerConnection.createAnswer();
       await peerConnection.setLocalDescription(answer);
       socket.send(JSON.stringify({ answer: peerConnection.localDescription }));
+    } else if (data.answer) {
+      await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
     } else if (data.candidate) {
-      try {
-        await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
-      } catch (e) {
-        console.error("Error adding ICE-Candidate:", e);
-      }
+      await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
     }
   } catch (e) {
     console.error("Error handling WebSocket-Message:", e);
